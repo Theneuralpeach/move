@@ -1,4 +1,4 @@
-const CACHE = 'move-checklist-v1';
+const CACHE = 'move-checklist-v2';
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
