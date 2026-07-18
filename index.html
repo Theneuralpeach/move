@@ -175,6 +175,26 @@
     color:var(--sub);
     padding:24px 20px 8px;
   }
+  .logitem{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:12px 14px;
+    margin-bottom:8px;
+    font-size:14.5px;
+    line-height:1.45;
+    color:var(--sub);
+    opacity:0.7;
+  }
+  .logitem::before{
+    content:"✓";
+    color:var(--accent);
+    font-weight:700;
+    flex:none;
+  }
   .reset{
     display:block;
     margin:30px auto 0;
@@ -236,6 +256,14 @@
     <ul data-group="logistics">
       <li data-id="m1"><span class="box"></span><span class="label">引っ越し業者の日程を再確認する</span></li>
       <li data-id="m2"><span class="box"></span><span class="label">荷造りする</span></li>
+    </ul>
+  </div>
+
+  <div class="group">
+    <p class="group-title"><span class="dot green"></span>完了ログ</p>
+    <ul class="log">
+      <li class="logitem">スターリー住所変更メール送信済み</li>
+      <li class="logitem">QBE住所変更＋Additional Insured依頼メール送信済み</li>
     </ul>
   </div>
 
