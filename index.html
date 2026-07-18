@@ -202,6 +202,7 @@
   <div class="group">
     <p class="group-title"><span class="dot red"></span>最優先</p>
     <ul data-group="urgent">
+      <li data-id="u0"><span class="box"></span><span class="label">QBEに住所変更＋Additional Insured依頼を送る</span></li>
       <li data-id="u1"><span class="box"></span><span class="label">クリスティからの家賃$300訂正の返信を確認する</span></li>
       <li data-id="u2"><span class="box"></span><span class="label">残額を支払う（cashier's check または money order）</span></li>
       <li data-id="u3"><span class="box"></span><span class="label">正式リース契約書に署名する</span></li>
@@ -261,6 +262,14 @@ function load(){
 }
 function save(state){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+const MIGRATION_KEY = 'moveChecklist_migration_qbeStarry';
+if(!localStorage.getItem(MIGRATION_KEY)){
+  const state = load();
+  state['l3'] = true;
+  state['u0'] = true;
+  save(state);
+  localStorage.setItem(MIGRATION_KEY, '1');
 }
 function render(){
   const state = load();
