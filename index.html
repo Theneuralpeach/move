@@ -148,6 +148,14 @@
     line-height:1.45;
     flex:1;
   }
+  .detail-link{
+    display:block;
+    margin-top:6px;
+    font-size:13px;
+    font-weight:700;
+    color:var(--accent);
+    text-decoration:none;
+  }
   li.done{
     opacity:0.42;
   }
@@ -238,7 +246,7 @@
       <li data-id="l1"><span class="box"></span><span class="label">電気（LADWP）を契約する</span></li>
       <li data-id="l2"><span class="box"></span><span class="label">ガス（SoCalGas）を契約する</span></li>
       <li data-id="l3"><span class="box"></span><span class="label">Starryに住所変更の連絡をする</span></li>
-      <li data-id="l4"><span class="box"></span><span class="label">Starryアカウントにログイン→Manage My Plan→Cancel or Transfer My Planで移転を予約する</span></li>
+      <li data-id="l4"><span class="box"></span><span class="label">Starryアカウントにログイン→Manage My Plan→Cancel or Transfer My Planで移転を予約する<a href="starry-transfer.html" class="detail-link">詳細を見る →</a></span></li>
       <li data-id="l5"><span class="box"></span><span class="label">移転予約日にルーターを新居へ持参し技術者の設置に立ち会う</span></li>
     </ul>
   </div>
@@ -258,7 +266,7 @@
     <ul data-group="logistics">
       <li data-id="m1"><span class="box"></span><span class="label">引っ越し業者の日程を再確認する</span></li>
       <li data-id="m2"><span class="box"></span><span class="label">荷造りする</span></li>
-      <li data-id="m3"><span class="box"></span><span class="label">ベッド回収を311（LA Sanitation）に予約する（収集日の前日までに）</span></li>
+      <li data-id="m3"><span class="box"></span><span class="label">ベッド回収を311（LA Sanitation）に予約する（収集日の前日までに）<a href="bed-pickup.html" class="detail-link">詳細を見る →</a></span></li>
     </ul>
   </div>
 
@@ -315,7 +323,8 @@ function render(){
   document.getElementById('progressLabel').textContent = doneCount + '/' + total;
 }
 items.forEach(li => {
-  li.addEventListener('click', () => {
+  li.addEventListener('click', (e) => {
+    if(e.target.closest('.detail-link')) return;
     const state = load();
     const id = li.dataset.id;
     state[id] = !state[id];
