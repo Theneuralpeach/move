@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>新居の間取り図</title>
+<meta name="theme-color" content="#ffffff">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  :root{
+    --ink:#1a1a1a;
+    --sub:#6b6b6b;
+    --line:#e8e8e6;
+    --card:#ffffff;
+    --bg:#fafaf9;
+    --accent:#c0392b;
+    --accent-soft:#fbeceb;
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#f2f2f0;
+      --sub:#9a9a95;
+      --line:#2c2c2a;
+      --card:#1c1c1a;
+      --bg:#121211;
+      --accent:#e08a80;
+      --accent-soft:#2a1e1d;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;
+    min-height:100vh;
+    padding-bottom:40px;
+  }
+  header{
+    padding:24px 20px 14px;
+    border-bottom:1px solid var(--line);
+  }
+  .back{
+    display:inline-block;
+    font-size:13px;
+    color:var(--sub);
+    text-decoration:none;
+    margin-bottom:10px;
+  }
+  h1{
+    font-size:19px;
+    margin:0 0 4px;
+  }
+  .sub{
+    font-size:13px;
+    color:var(--sub);
+    margin:0;
+  }
+  main{
+    padding:16px 16px 40px;
+    max-width:560px;
+    margin:0 auto;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px;
+    margin-bottom:16px;
+  }
+  .card h2{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--sub);
+    margin:0 0 12px;
+  }
+  .plan-img{
+    width:100%;
+    border-radius:10px;
+    display:block;
+    background:#fff;
+  }
+  .row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    font-size:14.5px;
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .row:last-child{border-bottom:none;}
+  .row .k{color:var(--ink);}
+  .row .v{text-align:right; font-weight:600; color:var(--sub); font-variant-numeric:tabular-nums;}
+  .row.total .k, .row.total .v{color:var(--accent); font-weight:700;}
+  .note{
+    font-size:13px;
+    color:var(--sub);
+    line-height:1.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="index.html">← チェックリストに戻る</a>
+  <h1>新居の間取り図</h1>
+  <p class="sub">5131 Buffalo Ave #7, Sherman Oaks</p>
+</header>
+
+<main>
+  <div class="card">
+    <img class="plan-img" src="floorplan.png" alt="間取り図">
+  </div>
+
+  <div class="card">
+    <h2>部屋ごとの広さ</h2>
+    <div class="row"><span class="k">Living Room</span><span class="v">425.97 sq ft</span></div>
+    <div class="row"><span class="k">Bedroom（左）</span><span class="v">128.93 sq ft</span></div>
+    <div class="row"><span class="k">Bedroom（右）</span><span class="v">151.32 sq ft</span></div>
+    <div class="row"><span class="k">Closet</span><span class="v">21.12 sq ft</span></div>
+    <div class="row"><span class="k">Hallway</span><span class="v">57.62 sq ft</span></div>
+    <div class="row"><span class="k">Bathroom</span><span class="v">56.33 sq ft</span></div>
+    <div class="row total"><span class="k">合計（表示分）</span><span class="v">841.29 sq ft</span></div>
+  </div>
+
+  <p class="note">出典: Braum Management 提供の間取り図（本人スクリーンショット、2026-07-21）。キッチンは面積表記なし。</p>
+</main>
+</body>
+</html>

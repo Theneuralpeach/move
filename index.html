@@ -213,6 +213,22 @@
     padding:8px 14px;
     border-radius:20px;
   }
+  .reslink{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:12px 14px;
+    margin-top:14px;
+    text-decoration:none;
+    color:var(--ink);
+    font-size:14px;
+    font-weight:600;
+  }
+  .reslink .arrow{color:var(--accent); font-weight:700;}
 </style>
 </head>
 <body>
@@ -224,6 +240,7 @@
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     <div class="progress-label" id="progressLabel">0/16</div>
   </div>
+  <a class="reslink" href="floorplan.html">🗺️ 新居の間取り図を見る<span class="arrow">→</span></a>
 </header>
 
 <main>
