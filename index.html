@@ -265,8 +265,8 @@
       <li data-id="l1"><span class="box"></span><span class="label">電気（LADWP）を契約する</span></li>
       <li data-id="l2"><span class="box"></span><span class="label">ガス（SoCalGas）を契約する</span></li>
       <li data-id="l3"><span class="box"></span><span class="label">Starryに住所変更の連絡をする</span></li>
-      <li data-id="l4"><span class="box"></span><span class="label">Starryアカウントにログイン→Manage My Plan→Cancel or Transfer My Planで移転を予約する<a href="starry-transfer.html" class="detail-link">詳細を見る →</a></span></li>
-      <li data-id="l5"><span class="box"></span><span class="label">移転予約日にルーターを新居へ持参し技術者の設置に立ち会う</span></li>
+      <li data-id="l4"><span class="box"></span><span class="label">Starryの移転を予約する<a href="starry-transfer.html" class="detail-link">詳細を見る →</a></span></li>
+      <li data-id="l5"><span class="box"></span><span class="label">7/31（金）2pm: Starry LinkとDashを新居へ持参し技術者の設置に立ち会う</span></li>
     </ul>
   </div>
 
@@ -328,6 +328,13 @@ if(!localStorage.getItem(MIGRATION_KEY)){
   state['u0'] = true;
   save(state);
   localStorage.setItem(MIGRATION_KEY, '1');
+}
+const MIGRATION_KEY2 = 'moveChecklist_migration_starryBooked';
+if(!localStorage.getItem(MIGRATION_KEY2)){
+  const state = load();
+  state['l4'] = true;
+  save(state);
+  localStorage.setItem(MIGRATION_KEY2, '1');
 }
 function render(){
   const state = load();
