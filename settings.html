@@ -71,62 +71,71 @@
 
 <script src="info.js"></script>
 <script>
-  const info = MoveInfo.get();
-  f_name.value = info.name || '';
-  f_cell.value = info.cell || '';
-  f_addrOld.value = info.addrOld || '';
-  f_addrNew.value = info.addrNew || '';
+(function(){
+  if (typeof MoveInfo === 'undefined') { alert('読み込みエラー。アプリを一度閉じて開き直してね。'); return; }
+  var $ = function(id){ return document.getElementById(id); };
+  var elName = $('f-name'), elCell = $('f-cell'), elAddrOld = $('f-addrOld'), elAddrNew = $('f-addrNew');
+  var elSave = $('saveBtn');
+  var elFpPreview = $('fpPreview'), elFpBtn = $('fpBtn'), elFpInput = $('fpInput'), elFpRemove = $('fpRemove');
 
-  saveBtn.addEventListener('click', () => {
-    MoveInfo.set({
-      name: f_name.value.trim(),
-      cell: f_cell.value.trim(),
-      addrOld: f_addrOld.value.trim(),
-      addrNew: f_addrNew.value.trim()
-    });
-    saveBtn.textContent = '保存しました ✓';
-    saveBtn.classList.add('saved');
-    setTimeout(() => { saveBtn.textContent = '保存する'; saveBtn.classList.remove('saved'); }, 1600);
+  var info = MoveInfo.get();
+  elName.value = info.name || '';
+  elCell.value = info.cell || '';
+  elAddrOld.value = info.addrOld || '';
+  elAddrNew.value = info.addrNew || '';
+
+  elSave.addEventListener('click', function(){
+    try {
+      MoveInfo.set({
+        name: elName.value.trim(),
+        cell: elCell.value.trim(),
+        addrOld: elAddrOld.value.trim(),
+        addrNew: elAddrNew.value.trim()
+      });
+      elSave.textContent = '保存しました ✓';
+      elSave.classList.add('saved');
+      setTimeout(function(){ elSave.textContent = '保存する'; elSave.classList.remove('saved'); }, 1600);
+    } catch(err){
+      alert('保存できませんでした。Safariのプライベートモードだと保存できないことがあります。通常モードで開いてみてね。');
+    }
   });
 
   function renderFp(){
-    const fp = MoveInfo.getFloorplan();
-    if(fp){ fpPreview.src = fp; fpPreview.style.display = 'block'; fpBtn.textContent = '別の画像に変える'; fpRemove.style.display = 'block'; }
-    else { fpPreview.style.display = 'none'; fpBtn.textContent = 'タップして間取り図の画像を選ぶ'; fpRemove.style.display = 'none'; }
+    var fp = MoveInfo.getFloorplan();
+    if(fp){ elFpPreview.src = fp; elFpPreview.style.display = 'block'; elFpBtn.textContent = '別の画像に変える'; elFpRemove.style.display = 'block'; }
+    else { elFpPreview.style.display = 'none'; elFpBtn.textContent = 'タップして間取り図の画像を選ぶ'; elFpRemove.style.display = 'none'; }
   }
-  fpInput.addEventListener('change', e => {
-    const file = e.target.files[0]; if(!file) return;
-    fpBtn.textContent = '読み込み中…';
-    const r = new FileReader();
-    r.onload = () => {
-      const img = new Image();
-      img.onload = () => {
-        // 端末保存に収まるよう自動縮小（大きい写真でも保存できるように）
-        const max = 1400;
-        let w = img.width, h = img.height;
-        if (w > max || h > max) { const s = max / Math.max(w, h); w = Math.round(w * s); h = Math.round(h * s); }
-        const c = document.createElement('canvas'); c.width = w; c.height = h;
+
+  elFpInput.addEventListener('change', function(e){
+    var file = e.target.files[0]; if(!file) return;
+    elFpBtn.textContent = '読み込み中…';
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var max = 1400, w = img.width, h = img.height;
+        if (w > max || h > max) { var s = max / Math.max(w, h); w = Math.round(w*s); h = Math.round(h*s); }
+        var c = document.createElement('canvas'); c.width = w; c.height = h;
         c.getContext('2d').drawImage(img, 0, 0, w, h);
-        let out;
-        try { out = c.toDataURL('image/jpeg', 0.82); }
-        catch(err){ out = r.result; }
-        try {
-          MoveInfo.setFloorplan(out);
-          renderFp();
-        } catch(err){
-          alert('画像が大きすぎて保存できませんでした。もう少し小さい画像を選んでね。');
-          renderFp();
-        }
+        var out;
+        try { out = c.toDataURL('image/jpeg', 0.82); } catch(err){ out = r.result; }
+        try { MoveInfo.setFloorplan(out); renderFp(); }
+        catch(err){ alert('画像が大きすぎて保存できませんでした。もう少し小さい画像を選んでね。（またはプライベートモードだと保存できません）'); renderFp(); }
       };
-      img.onerror = () => { alert('この画像は読み込めませんでした。別の画像を試してね。'); renderFp(); };
+      img.onerror = function(){ alert('この画像は読み込めませんでした。別の画像を試してね。'); renderFp(); };
       img.src = r.result;
     };
-    r.onerror = () => { alert('画像を読み込めませんでした。'); renderFp(); };
+    r.onerror = function(){ alert('画像を読み込めませんでした。'); renderFp(); };
     r.readAsDataURL(file);
     e.target.value = '';
   });
-  fpRemove.addEventListener('click', () => { if(confirm('間取り図を削除しますか？')){ MoveInfo.clearFloorplan(); renderFp(); } });
+
+  elFpRemove.addEventListener('click', function(){
+    if(confirm('間取り図を削除しますか？')){ MoveInfo.clearFloorplan(); renderFp(); }
+  });
+
   renderFp();
+})();
 </script>
 </body>
 </html>
