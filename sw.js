@@ -1,5 +1,5 @@
-const CACHE = 'move-checklist-v12';
-const ASSETS = ['./', './index.html', './manifest.json', './bed-pickup.html', './starry-transfer.html'];
+const CACHE = 'move-checklist-v13';
+const ASSETS = ['./', './index.html', './manifest.json', './info.js', './settings.html', './floorplan.html', './bed-pickup.html', './starry-transfer.html'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));

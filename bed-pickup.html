@@ -128,23 +128,15 @@
 <main>
   <div class="card">
     <h2>予約情報</h2>
-    <div class="row"><span class="k">住所</span><span class="v">3205 Los Feliz Blvd<br>#6-224, Los Angeles, CA 90039</span></div>
+    <div class="row"><span class="k">住所</span><span class="v" data-info="addrOld" data-ph="（自分の情報で設定）"></span></div>
     <div class="row"><span class="k">品目</span><span class="v">ベッドフレーム＋マットレス</span></div>
-    <div class="row"><span class="k">電話番号</span><span class="v">424-558-5414</span></div>
+    <div class="row"><span class="k">電話番号</span><span class="v" data-info="cell" data-ph="（自分の情報で設定）"></span></div>
     <div class="row"><span class="k">希望日</span><span class="v">7月30日（引っ越し当日）</span></div>
   </div>
 
   <div class="card">
     <h2>電話で読む英語スクリプト</h2>
-    <div class="script-box" id="scriptText">Hi, I'd like to schedule a free bulky item pickup.
-
-The address is 3205 Los Feliz Blvd, unit #6-224, Los Angeles, CA 90039.
-
-The items are a bed frame and a mattress.
-
-My phone number is 424-558-5414.
-
-I'd like it picked up on July 30th if possible — that's my move-out day. Can you tell me what dates are available?</div>
+    <div class="script-box" id="scriptText"></div>
     <button class="copy-btn" id="copyBtn">コピーする</button>
   </div>
 
@@ -155,12 +147,28 @@ I'd like it picked up on July 30th if possible — that's my move-out day. Can y
   </div>
 
   <p class="note">
-    聞かれそうなこと：名前は Yurisa Cheatham／建物タイプは Apartment。<br><br>
+    聞かれそうなこと：名前は <span data-info="name" data-ph="（自分の情報で設定）"></span>／建物タイプは Apartment。<br><br>
     注意：収集日の**前日まで**に予約が必要。予約前に道に出すと違法投棄扱いで罰金の対象になりうる。無料枠は年10回まで。
   </p>
 </main>
 
+<script src="info.js"></script>
 <script>
+MoveInfo.fill();
+(function(){
+  const info = MoveInfo.get();
+  const addr = (info.addrOld || '［住所を自分の情報で設定］');
+  const cell = (info.cell || '［電話番号を自分の情報で設定］');
+  const name = (info.name || '');
+  const script =
+    "Hi, I'd like to schedule a free bulky item pickup.\n\n" +
+    "The address is " + addr + ".\n\n" +
+    "The items are a bed frame and a mattress.\n\n" +
+    "My phone number is " + cell + ".\n\n" +
+    (name ? "My name is " + name + ".\n\n" : "") +
+    "I'd like it picked up on July 30th if possible — that's my move-out day. Can you tell me what dates are available?";
+  document.getElementById('scriptText').textContent = script;
+})();
 document.getElementById('copyBtn').addEventListener('click', () => {
   const text = document.getElementById('scriptText').textContent;
   navigator.clipboard.writeText(text).then(() => {

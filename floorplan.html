@@ -107,12 +107,17 @@
 <header>
   <a class="back" href="index.html">← チェックリストに戻る</a>
   <h1>新居の間取り図</h1>
-  <p class="sub">5131 Buffalo Ave #7, Sherman Oaks</p>
+  <p class="sub"><span data-info="addrNew" data-ph="（住所は「⚙️ 自分の情報」で設定）"></span></p>
 </header>
 
 <main>
   <div class="card">
-    <img class="plan-img" src="floorplan.png" alt="間取り図">
+    <img class="plan-img" id="planImg" alt="間取り図" style="display:none;">
+    <a id="planEmpty" href="settings.html" style="display:none;text-decoration:none;">
+      <div style="text-align:center;padding:28px 16px;border:1px dashed var(--line);border-radius:10px;color:var(--sub);font-size:14px;">
+        間取り図はまだ未設定<br><b style="color:var(--accent);">⚙️ 自分の情報で画像を追加 →</b>
+      </div>
+    </a>
   </div>
 
   <div class="card">
@@ -126,7 +131,15 @@
     <div class="row total"><span class="k">合計（表示分）</span><span class="v">841.29 sq ft</span></div>
   </div>
 
-  <p class="note">出典: Braum Management 提供の間取り図（本人スクリーンショット、2026-07-21）。キッチンは面積表記なし。</p>
+  <p class="note">出典: 管理会社提供の間取り図。キッチンは面積表記なし。</p>
 </main>
+
+<script src="info.js"></script>
+<script>
+  MoveInfo.fill();
+  const fp = MoveInfo.getFloorplan();
+  if(fp){ planImg.src = fp; planImg.style.display = 'block'; }
+  else { planEmpty.style.display = 'block'; }
+</script>
 </body>
 </html>
