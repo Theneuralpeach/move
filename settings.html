@@ -96,9 +96,34 @@
   }
   fpInput.addEventListener('change', e => {
     const file = e.target.files[0]; if(!file) return;
+    fpBtn.textContent = '読み込み中…';
     const r = new FileReader();
-    r.onload = () => { MoveInfo.setFloorplan(r.result); renderFp(); };
+    r.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        // 端末保存に収まるよう自動縮小（大きい写真でも保存できるように）
+        const max = 1400;
+        let w = img.width, h = img.height;
+        if (w > max || h > max) { const s = max / Math.max(w, h); w = Math.round(w * s); h = Math.round(h * s); }
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        let out;
+        try { out = c.toDataURL('image/jpeg', 0.82); }
+        catch(err){ out = r.result; }
+        try {
+          MoveInfo.setFloorplan(out);
+          renderFp();
+        } catch(err){
+          alert('画像が大きすぎて保存できませんでした。もう少し小さい画像を選んでね。');
+          renderFp();
+        }
+      };
+      img.onerror = () => { alert('この画像は読み込めませんでした。別の画像を試してね。'); renderFp(); };
+      img.src = r.result;
+    };
+    r.onerror = () => { alert('画像を読み込めませんでした。'); renderFp(); };
     r.readAsDataURL(file);
+    e.target.value = '';
   });
   fpRemove.addEventListener('click', () => { if(confirm('間取り図を削除しますか？')){ MoveInfo.clearFloorplan(); renderFp(); } });
   renderFp();
